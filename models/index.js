@@ -11,7 +11,7 @@ var Page= db.define('page', {
     date: { type: Sequelize.DATE, defaultValue: Sequelize.NOW },
     },{
       getterMethods   : {
-        route       : function()  { return '/wiki/'+this.urlTitle }
+        route       : function()  { return '/wiki/'+this.urlTitle + ".html"}
       }, hooks: {
         beforeValidate: function(page, options) {
 
@@ -22,11 +22,20 @@ var Page= db.define('page', {
         }
     });
 
+/*Page.findAll({
+    where:{
+        title: var here....
+    }
+
+});*/
+
 
 var User= db.define('user', {
     name: { type: Sequelize.STRING, allowNull: false},
     email: { type: Sequelize.STRING, allowNull: false, isEmail: true},
 });
+
+Page.belongsTo(User, { as: 'author'});
 
 module.exports= {
     Page: Page,
