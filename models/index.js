@@ -17,15 +17,11 @@ var Page= db.define('page', {
 
 
           page.urlTitle = page.title.replace(/[^\s|\w]+/g, '').replace(/\s/g,'_');
-          //page.date = new Date();
-          //console.log('this is the new date:', page.date);
+
             },
         }
     });
 
-/*Page.hook('beforeValidate', function(page, options) {
-  page.urlTitle = this.title.replace(/[^\s|\w]+/g, '').replace(/\s/g,'_');
-})*/
 
 var User= db.define('user', {
     name: { type: Sequelize.STRING, allowNull: false},

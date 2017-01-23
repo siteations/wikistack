@@ -22,15 +22,38 @@ router.post('/', (req,res, next)=>{
         content: inputs.content
       });
 
-  page.save().then(()=> {
-    res.json(req.body);
 
+
+  page.save().then((saved)=> {
+    console.log("saved: ", saved);
+
+    res.render('wikipage.html', { title: inputs.title,
+        urltitle: page.urlTitle,
+        name: inputs.name,
+        content: page.content,
+    });
   });
-  // -> after save -> res.redirect('/');
-
-
-
 })
+
+/*router.get('/:urlTitle', function (req, res, next) {
+    var urlTitle=req.params.urlTitle.slice(0,-5);
+
+    console.log("page: ", Page.findAll());
+
+    var site = Page.findAll({
+        where:{
+            urlTitle: urlTitle
+        }
+        //attribute:['title','urlTitle','content','status','date']
+
+    });
+
+    /*site.then((foundPage)=>{
+        console.log('retpage: ', foundPage);
+        res.json(foundPage);
+    })
+    next();
+});*/
 
 router.get('/add', (req,res, next)=>{
     //retrieve the 'add a page' form

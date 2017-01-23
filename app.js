@@ -12,16 +12,14 @@ var env = nunjucks.configure('views', {noCache: true, express:app });
     // when res.render works with html files, have it use nunjucks to do so
     app.engine('html', nunjucks.render);
 
-
-
 app.use(parser.urlencoded({extended:true}));
 app.use(parser.json());
 
 app.use(morgan('dev'));
 
+var static = express.static('./public/');
 
-express.static('./public');
-express.static('./public/stylesheets/');
+app.use(static);
 
 app.use('/wiki/', router);
 
