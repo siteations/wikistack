@@ -1,5 +1,6 @@
 var express = require('express');
 var app= express();
+var router=require('./routes/wiki.js')
 var morgan = require('morgan');
 var parser= require('body-parser');
 var nunjucks= require('nunjucks');
@@ -12,20 +13,26 @@ var env = nunjucks.configure('views', {noCache: true, express:app });
     app.engine('html', nunjucks.render);
 
 
+
+app.use(parser.urlencoded({extended:true}));
+app.use(parser.json());
+
 app.use(morgan('dev'));
 
 
 express.static('./public');
 express.static('./public/stylesheets/');
 
+app.use('/wiki/', router);
+
 app.get('/', (req, res) => {
     res.render('index.html');
 });
 
 
-models.User.sync({})
+models.User.sync({force:true})
 .then(()=> {
-    return models.Page.sync({})
+    return models.Page.sync({force:true})
 }).then(()=>{
     app.listen(3000, function () {
         console.log('Server is listening on port 3000!');
